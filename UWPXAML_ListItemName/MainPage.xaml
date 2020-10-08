@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="UWPXAML_ListItemName.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPXAML_ListItemName"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Name="BirdsListLabel" x:Uid="BirdsListLabel" />
+            <!-- Have the list's accessible name set from the nearby label. -->
+            <ListBox Name="BirdList" AutomationProperties.LabeledBy="{Binding ElementName=BirdsListLabel}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Have the accessible names of the list items here set from the leading and most 
+                            important text string contained in the item. This helps customers using screen 
+                            readers to efficiently learn when they've navigated to an item of interest. Once 
+                            at that item they can use screen reader commands to navigate into the item and 
+                            reach all text contained in the item. -->
+                        
+                        <!-- By setting the AutomationProperties.Name on the DataTemplate's Grid, that string will
+                            get repurposed as the accessible name of the list item itself. A side effect of that 
+                            is that the Grid becomes exposed as a unique element through the Control view of the 
+                            UI Automation (UIA) tree. Given that in this case that's not helpful to customers, 
+                            take explicit action to have the element not exposed through the Control view. -->
+                        
+                        <Grid Margin="0,2" 
+                            AutomationProperties.Name="{Binding Name}"
+                            AutomationProperties.AccessibilityView="Raw">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Name}" Margin="0 0 20 0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Habitat}" />
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Voice}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Page>
