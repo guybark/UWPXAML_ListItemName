@@ -10,9 +10,16 @@
 
     <Grid>
         <StackPanel Margin="20">
-            <TextBlock Name="BirdsListLabel" x:Uid="BirdsListLabel" />
+            <TextBlock Name="BirdsListLabel" x:Uid="BirdsListLabel" Margin="0 0 0 4" />
             <!-- Have the list's accessible name set from the nearby label. -->
-            <ListBox Name="BirdList" AutomationProperties.LabeledBy="{Binding ElementName=BirdsListLabel}">
+            <local:BirdListBox x:Name="BirdList" 
+                AutomationProperties.LabeledBy="{Binding ElementName=BirdsListLabel}"
+                KeyDown="BirdList_KeyDown">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <!-- Have the accessible names of the list items here set from the leading and most 
@@ -26,13 +33,16 @@
                             is that the Grid becomes exposed as a unique element through the Control view of the 
                             UI Automation (UIA) tree. Given that in this case that's not helpful to customers, 
                             take explicit action to have the element not exposed through the Control view. -->
-                        
-                        <Grid Margin="0,2" 
+
+                        <!-- At the time of writing this, it seems that attempts to bind 
+                            AutomationProperties.HelpText here don't work. -->
+                        <Grid Margin="0,2"
                             AutomationProperties.Name="{Binding Name}"
                             AutomationProperties.AccessibilityView="Raw">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -41,10 +51,16 @@
                             <TextBlock Text="{Binding Name}" Margin="0 0 20 0"/>
                             <TextBlock Grid.Column="1" Text="{Binding Habitat}" />
                             <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Voice}" />
+                            <Button x:Uid="BirdItemDeleteButton" 
+                                Grid.Column="2" Grid.RowSpan="2" 
+                                Content="X" Margin="8 0 0 0" 
+                                Click="DeleteBirdItemButton_Click" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </local:BirdListBox>
+            <Button x:Uid="CloseButton" AccessKey="C" Margin="0 20 0 0"
+                Click="CloseButton_Click" />
         </StackPanel>
     </Grid>
 </Page>

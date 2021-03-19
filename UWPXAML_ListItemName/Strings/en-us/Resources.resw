@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BirdItemDeleteButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Delete bird</value>
+  </data>
+  <data name="BirdItemHelp" xml:space="preserve">
+    <value>Press the Delete key to remove this bird</value>
+  </data>
   <data name="BirdsListLabel.Text" xml:space="preserve">
     <value>Birds</value>
+  </data>
+  <data name="CloseButton.Content" xml:space="preserve">
+    <value>Close</value>
   </data>
 </root>
